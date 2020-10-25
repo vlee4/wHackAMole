@@ -21,7 +21,10 @@ export default new Phaser.Class({
     this.add.text(270, 345, "Collect all the stars to win.");
   },
   update: function () {
-    if (cursors.space.isDown) {
+
+    var pointer = this.input.activePointer;
+
+    if (cursors.space.isDown||pointer.isDown) {
       this.scene.start("game");
     }
   },

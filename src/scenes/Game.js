@@ -28,6 +28,12 @@ export default new Phaser.Class({
     this.load.image("star", star);
   },
   create: function create() {
+    // this.input.on("pointerup", function(pointer){
+    //   if(pointer.leftButtonReleased()||pointer.wasTouch){
+    //     console.log("Here it goes again!")
+    //   }
+    // })
+
     this.add.image(400, 300, "background"); //note: All Phaser3 Game Obj are positioned based on their center by default, and can be changed to have the drawing position set to the top-left by appending .setOrigin(0,0) to this line
 
     const stars = this.physics.add.group({
@@ -81,6 +87,12 @@ export default new Phaser.Class({
     box.setCollideWorldBounds(true);
   },
   update: function () {
+    var pointer = this.input.activePointer;
+
+    // if(pointer.isDown){
+    //   console.log("IN UPDATE!")
+    // }
+
     const { velocity } = box.body;
 
     if (cursors.space.isDown) {
