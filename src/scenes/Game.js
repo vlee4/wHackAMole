@@ -75,6 +75,8 @@ export default new Phaser.Class({
 
     this.physics.add.collider(stars, box, processCollision, null, this);
 
+    this.physics.add.collider(viruses, box, processCollision, null, this);
+
     box.setBounce(1, 1);
     box.setCollideWorldBounds(true);
   },
