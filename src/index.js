@@ -16,4 +16,4 @@ var config = {
   scene: [MainMenu, Game, WinScreen],
 };
 
-var game = new Phaser.Game(config);
+var game = new Phaser.Game(config); //loads the game with the config's specs

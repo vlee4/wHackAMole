@@ -1,0 +1,167 @@
+{
+	"textures": [
+		{
+			"image": "CoronaSpriteSheet.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 1470,
+				"h": 197
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Angryvirus-sm.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 300,
+						"h": 300
+					},
+					"spriteSourceSize": {
+						"x": 62,
+						"y": 38,
+						"w": 208,
+						"h": 195
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 208,
+						"h": 195
+					}
+				},
+				{
+					"filename": "Angryvirus2-sm.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 300,
+						"h": 300
+					},
+					"spriteSourceSize": {
+						"x": 62,
+						"y": 39,
+						"w": 208,
+						"h": 195
+					},
+					"frame": {
+						"x": 211,
+						"y": 1,
+						"w": 208,
+						"h": 195
+					}
+				},
+				{
+					"filename": "Angryvirus3-sm.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 300,
+						"h": 300
+					},
+					"spriteSourceSize": {
+						"x": 62,
+						"y": 35,
+						"w": 208,
+						"h": 195
+					},
+					"frame": {
+						"x": 421,
+						"y": 1,
+						"w": 208,
+						"h": 195
+					}
+				},
+				{
+					"filename": "Angryvirus4-sm.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 300,
+						"h": 300
+					},
+					"spriteSourceSize": {
+						"x": 62,
+						"y": 33,
+						"w": 208,
+						"h": 195
+					},
+					"frame": {
+						"x": 631,
+						"y": 1,
+						"w": 208,
+						"h": 195
+					}
+				},
+				{
+					"filename": "Angryvirus5-sm.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 300,
+						"h": 300
+					},
+					"spriteSourceSize": {
+						"x": 62,
+						"y": 32,
+						"w": 208,
+						"h": 195
+					},
+					"frame": {
+						"x": 841,
+						"y": 1,
+						"w": 208,
+						"h": 195
+					}
+				},
+				{
+					"filename": "Angryvirus6-sm.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 300,
+						"h": 300
+					},
+					"spriteSourceSize": {
+						"x": 62,
+						"y": 31,
+						"w": 208,
+						"h": 195
+					},
+					"frame": {
+						"x": 1051,
+						"y": 1,
+						"w": 208,
+						"h": 195
+					}
+				},
+				{
+					"filename": "Angryvirus7-sm.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 300,
+						"h": 300
+					},
+					"spriteSourceSize": {
+						"x": 62,
+						"y": 31,
+						"w": 208,
+						"h": 195
+					},
+					"frame": {
+						"x": 1261,
+						"y": 1,
+						"w": 208,
+						"h": 195
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:45ac490fd2030b9b82396eecd30a8e33:b5824e31b227eaa01ce7472f2cae9bd4:ee3aa6d1f68caaef3b9f588236044fa0$"
+	}
+}
