@@ -5,8 +5,8 @@ import WinScreen from "./scenes/WinScreen";
 
 var config = {
   type: Phaser.AUTO,
-  width: 800,
-  height: 600,
+  width: 540,
+  height: 820,
   physics: {
     default: "arcade",
     arcade: {

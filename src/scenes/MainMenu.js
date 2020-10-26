@@ -13,18 +13,18 @@ export default new Phaser.Class({
 
     graphics = this.add.graphics();
     graphics.fillStyle(0x000000, 1);
-    graphics.fillRect(0, 0, 800, 600);
+    graphics.fillRect(0, 0, 550, 820);
 
-    this.add.text(270, 300, "Press space to start.");
-    this.add.text(270, 315, "Move with up, down, left, right.");
-    this.add.text(270, 330, "Press spacebar to brake.");
-    this.add.text(270, 345, "Collect all the stars to win.");
+    this.add.text(275, 300, "Press space to start.").setOrigin(0.5);
+    this.add.text(275, 315, "Move with up, down, left, right.").setOrigin(0.5);
+    this.add.text(275, 330, "Press spacebar to brake.").setOrigin(0.5);
+    this.add.text(275, 345, "Collect all the stars to win.").setOrigin(0.5);
   },
   update: function () {
 
     var pointer = this.input.activePointer;
 
-    if (cursors.space.isDown||pointer.isDown) {
+    if (cursors.space.isDown || pointer.isDown) {
       this.scene.start("game");
     }
   },

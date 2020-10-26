@@ -13,9 +13,9 @@ export default new Phaser.Class({
 
     graphics = this.add.graphics();
     graphics.fillStyle(0x000000, 1);
-    graphics.fillRect(0, 0, 800, 600);
+    graphics.fillRect(0, 0, 550, 820);
 
-    this.add.text(275, 300, "You win! Press space to restart.");
+    this.add.text(275, 300, "You win! Press space to restart.").setOrigin(0.5);
   },
   update: function () {
     if (cursors.space.isDown) {
