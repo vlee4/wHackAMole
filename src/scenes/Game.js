@@ -34,7 +34,7 @@ export default new Phaser.Class({
     //   }
     // })
 
-    this.add.image(245, 410, "background"); //note: All Phaser3 Game Obj are positioned based on their center by default, and can be changed to have the drawing position set to the top-left by appending .setOrigin(0,0) to this line
+    this.add.image(275, 410, "background"); //note: All Phaser3 Game Obj are positioned based on their center by default, and can be changed to have the drawing position set to the top-left by appending .setOrigin(0,0) to this line
 
     const stars = this.physics.add.group({
       key: "star",
