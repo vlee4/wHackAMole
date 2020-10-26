@@ -1,0 +1,16 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0em;
+  padding: 2em;
+}
+
+.instructions {
+  margin: 0.5em 0em 0.5em 0em;
+}
+
+#gameCanvas {
+  display: flex;
+  justify-content: center;
+}

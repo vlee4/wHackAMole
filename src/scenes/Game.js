@@ -54,7 +54,7 @@ export default new Phaser.Class({
     const viruses = this.physics.add.group({
       key: "virus",
       repeat: 5,
-      setScale: { x: 1, y: 1 },
+      setScale: { x: 0.75, y: 0.75 },
       setXY: { x: 300, y: 300 }
     })
 

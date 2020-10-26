@@ -13,6 +13,7 @@ var config = {
       gravity: { y: 0, x: 0 },
     },
   },
+  parent: "gameCanvas",
   scene: [MainMenu, Game, WinScreen],
 };
 
