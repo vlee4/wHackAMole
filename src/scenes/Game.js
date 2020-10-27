@@ -49,18 +49,11 @@ export default new Phaser.Class({
 
     const viruses = this.physics.add.staticGroup({
       key: "virus",
+      repeat: 8,
       setScale: { x: 0.75, y: 0.75 },
-      setXY: { x: 300, y: 300 }
+      // setXY: { x: 130, y: 280, stepX: 160, stepY: 130 },
+      gridAlign: {width: 3, height: 3, cellWidth: 160, cellHeight: 150, x: 105, y: 260}
     })
-
-    // viruses.children.iterate(function (child) {
-    //   child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-    //   child.setVelocityX(150 - Math.random() * 300);
-    //   child.setVelocityY(150 - Math.random() * 300);
-    //   child.setBounce(1, 1);
-    //   child.setCollideWorldBounds(true);
-    // });
-    // viruses.setInteractive();
 
     cursors = this.input.keyboard.createCursorKeys();
 
@@ -79,17 +72,11 @@ export default new Phaser.Class({
     this.physics.add.collider(viruses, box, processCollision, null, this);
 
     const onObjectClicked = (pointer, gameObject) =>{
-      console.log("CLICKED!!!")
+      console.log("CLICKED!!!", gameObject,"pointer:", pointer)
+      virus.destroy();
     }
 
     this.input.on("pointerdown", onObjectClicked);
-
-    //  this.input.on("pointerup", function(pointer){
-    //   if(pointer.leftButtonReleased()||pointer.wasTouch){
-    //     console.log("Here it goes again!")
-    //     viruses.killAndHide();
-    //   }
-    // })
 
     box.setBounce(1, 1);
     box.setCollideWorldBounds(true);
@@ -98,7 +85,7 @@ export default new Phaser.Class({
     var pointer = this.input.activePointer;
 
     // if(pointer.isDown){
-    //   console.log("IN UPDATE!")
+      //   console.log("IN UPDATE!")
     // }
 
     const { velocity } = box.body;
