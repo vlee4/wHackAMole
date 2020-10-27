@@ -8,6 +8,7 @@ import { accelerate, decelerate } from "../utils";
 
 let box;
 let cursors;
+let pointer;
 
 export default new Phaser.Class({
   Extends: Phaser.Scene,
@@ -28,11 +29,6 @@ export default new Phaser.Class({
     this.load.image("star", star);
   },
   create: function create() {
-    // this.input.on("pointerup", function(pointer){
-    //   if(pointer.leftButtonReleased()||pointer.wasTouch){
-    //     console.log("Here it goes again!")
-    //   }
-    // })
 
     this.add.image(275, 410, "background"); //note: All Phaser3 Game Obj are positioned based on their center by default, and can be changed to have the drawing position set to the top-left by appending .setOrigin(0,0) to this line
 
@@ -51,20 +47,20 @@ export default new Phaser.Class({
       child.setCollideWorldBounds(true);
     });
 
-    const viruses = this.physics.add.group({
+    const viruses = this.physics.add.staticGroup({
       key: "virus",
-      repeat: 5,
       setScale: { x: 0.75, y: 0.75 },
       setXY: { x: 300, y: 300 }
     })
 
-    viruses.children.iterate(function (child) {
-      child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-      child.setVelocityX(150 - Math.random() * 300);
-      child.setVelocityY(150 - Math.random() * 300);
-      child.setBounce(1, 1);
-      child.setCollideWorldBounds(true);
-    });
+    // viruses.children.iterate(function (child) {
+    //   child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+    //   child.setVelocityX(150 - Math.random() * 300);
+    //   child.setVelocityY(150 - Math.random() * 300);
+    //   child.setBounce(1, 1);
+    //   child.setCollideWorldBounds(true);
+    // });
+    // viruses.setInteractive();
 
     cursors = this.input.keyboard.createCursorKeys();
 
@@ -80,8 +76,20 @@ export default new Phaser.Class({
     };
 
     this.physics.add.collider(stars, box, processCollision, null, this);
-
     this.physics.add.collider(viruses, box, processCollision, null, this);
+
+    const onObjectClicked = (pointer, gameObject) =>{
+      console.log("CLICKED!!!")
+    }
+
+    this.input.on("pointerdown", onObjectClicked);
+
+    //  this.input.on("pointerup", function(pointer){
+    //   if(pointer.leftButtonReleased()||pointer.wasTouch){
+    //     console.log("Here it goes again!")
+    //     viruses.killAndHide();
+    //   }
+    // })
 
     box.setBounce(1, 1);
     box.setCollideWorldBounds(true);
