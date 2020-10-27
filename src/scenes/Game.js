@@ -60,7 +60,13 @@ export default new Phaser.Class({
       virus.on("pointerdown", function(pointer){
         console.log("VIRUS", virus)
         virus.destroy();
-      })
+
+        const virusesLeft = viruses.countActive();
+        console.log("Viruses left", virusesLeft)
+        if(virusesLeft==0){
+          this.scene.start("winscreen");
+        }
+      }, this);
     }, this)
 
     cursors = this.input.keyboard.createCursorKeys();
@@ -78,13 +84,6 @@ export default new Phaser.Class({
 
     this.physics.add.collider(stars, box, processCollision, null, this);
     this.physics.add.collider(viruses, box, processCollision, null, this);
-
-    // const onObjectClicked = (pointer, gameObject) =>{
-    //   console.log("CLICKED!!!", gameObject,"pointer:", pointer)
-    //   viruses.destroy();
-    // }
-
-    // viruses.on("pointerdown", onObjectClicked);
 
     box.setBounce(1, 1);
     box.setCollideWorldBounds(true);
