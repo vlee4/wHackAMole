@@ -24,7 +24,7 @@ export default new Phaser.Class({
   },
   preload: function preload() {
     this.load.image("background", background);
-    this.load.spritesheet("virus", virus, { frameWidth: 208, frameHeight: 195 })
+    this.load.spritesheet("virus", virus, { frameWidth: 210, frameHeight: 195 })
 
   },
   create: function create() {
@@ -50,9 +50,16 @@ export default new Phaser.Class({
     })
 
     this.anims.create({
+      key:"neutral",
+      frames: [{key: "virus", frame: 0}],
+      frameRate: 20,
+    })
+
+    this.anims.create({
       key:"hit",
-      frames: [{key: "virus", frmae: 7}],
-      frameRate: 20
+      frames: [{key: "virus", frame: 6, duration: 100}],
+      frameRate: 20,
+      duration: 100
     })
 
     console.log("VIRUSES",viruses)
@@ -63,8 +70,12 @@ export default new Phaser.Class({
       virus.on("pointerdown", function(pointer){
         //Destroy virus
         let killedVirus = virus;
-        killedVirus.disableBody(true, true);
-        disabledBodies.push(killedVirus);
+        killedVirus.anims.play("hit");
+        console.log("killed virus", killedVirus)
+        setTimeout(function(){
+          killedVirus.disableBody(true, true);
+          disabledBodies.push(killedVirus);
+        }, 100)
         console.log("disabled ones", disabledBodies)
         // virus.destroy();
         //Add to score
@@ -90,6 +101,7 @@ export default new Phaser.Class({
       let randomIdx = Math.floor(Math.random()*(disabledLength-0))
       console.log("reviving",disabledBodies[randomIdx])
       let chosen = disabledBodies[randomIdx]
+      chosen.anims.play("neutral");
       chosen.enableBody(true, chosen.x, chosen.y, true, true)
     }
   },
