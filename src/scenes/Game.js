@@ -11,6 +11,8 @@ let cursors;
 let pointer;
 var score = 0;
 var scoreText;
+var viruses;
+let disabledBodies = [];
 let gameOver = false;
 
 
@@ -40,12 +42,19 @@ export default new Phaser.Class({
     //   child.setCollideWorldBounds(true);
     // });
 
-    const viruses = this.physics.add.staticGroup({
+    viruses = this.physics.add.staticGroup({
       key: "virus",
       repeat: 8,
       setScale: { x: 0.75, y: 0.75 },
       gridAlign: {width: 3, height: 3, cellWidth: 160, cellHeight: 150, x: 105, y: 260}
     })
+
+    this.anims.create({
+      key:"hit",
+      frames: [{key: "virus", frmae: 7}],
+      frameRate: 20
+    })
+
     console.log("VIRUSES",viruses)
 
     //Making viruses interactive
@@ -53,7 +62,11 @@ export default new Phaser.Class({
       virus.setInteractive();
       virus.on("pointerdown", function(pointer){
         //Destroy virus
-        virus.destroy();
+        let killedVirus = virus;
+        killedVirus.disableBody(true, true);
+        disabledBodies.push(killedVirus);
+        console.log("disabled ones", disabledBodies)
+        // virus.destroy();
         //Add to score
         score++;
         console.log("SCORE UPDATE", score)
@@ -71,5 +84,13 @@ export default new Phaser.Class({
   },
   update: function () {
     var pointer = this.input.activePointer;
+
+    if((viruses.countActive())<=3){
+      let disabledLength = disabledBodies.length;
+      let randomIdx = Math.floor(Math.random()*(disabledLength-0))
+      console.log("reviving",disabledBodies[randomIdx])
+      let chosen = disabledBodies[randomIdx]
+      chosen.enableBody(true, chosen.x, chosen.y, true, true)
+    }
   },
 });
