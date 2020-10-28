@@ -6,14 +6,23 @@ import virus from "../assets/CoronaSpriteSheet.png";
 import star from "../assets/star.png";
 import { accelerate, decelerate } from "../utils";
 
-let box;
-let cursors;
 let pointer;
 var score = 0;
 var scoreText;
 var viruses;
 let disabledBodies = [];
 let gameOver = false;
+let tracker = {
+  0: false,
+  1: false,
+  2: false,
+  3: false,
+  4: false,
+  5: false,
+  6: false,
+  7: false,
+  8: false,
+}
 
 
 export default new Phaser.Class({
@@ -41,13 +50,16 @@ export default new Phaser.Class({
     //   child.setBounce(1, 1);
     //   child.setCollideWorldBounds(true);
     // });
+    let randomNum = Math.floor(Math.random()*(8-1)+1);
 
     viruses = this.physics.add.staticGroup({
       key: "virus",
-      repeat: 8,
+      repeat: randomNum,
       setScale: { x: 0.75, y: 0.75 },
       gridAlign: {width: 3, height: 3, cellWidth: 160, cellHeight: 150, x: 105, y: 260}
     })
+
+    console.log("CHILDREN",viruses.getChildren())
 
     this.anims.create({
       key:"neutral",
@@ -64,20 +76,32 @@ export default new Phaser.Class({
 
     console.log("VIRUSES",viruses)
 
+    const killSprite = function(virus){
+      let killedVirus = virus;
+          killedVirus.anims.play("hit");
+          console.log("killed virus", killedVirus)
+          setTimeout(function(){
+            killedVirus.disableBody(true, true);
+            disabledBodies.push(killedVirus);
+          }, 100)
+          console.log("disabled ones", disabledBodies)
+
+    }
+
     //Making viruses interactive
     Phaser.Actions.Call(viruses.getChildren(), function(virus){
       virus.setInteractive();
       virus.on("pointerdown", function(pointer){
         //Destroy virus
-        let killedVirus = virus;
-        killedVirus.anims.play("hit");
-        console.log("killed virus", killedVirus)
-        setTimeout(function(){
-          killedVirus.disableBody(true, true);
-          disabledBodies.push(killedVirus);
-        }, 100)
-        console.log("disabled ones", disabledBodies)
-        // virus.destroy();
+        // let killedVirus = virus;
+        // killedVirus.anims.play("hit");
+        // console.log("killed virus", killedVirus)
+        // setTimeout(function(){
+        //   killedVirus.disableBody(true, true);
+        //   disabledBodies.push(killedVirus);
+        // }, 100)
+        // console.log("disabled ones", disabledBodies)
+        killSprite(virus);
         //Add to score
         score++;
         console.log("SCORE UPDATE", score)
@@ -92,17 +116,31 @@ export default new Phaser.Class({
     }, this);
 
 
+
   },
   update: function () {
-    var pointer = this.input.activePointer;
+    // var pointer = this.input.activePointer;
+    function getRandom(max, min=0){
+      return Math.floor(Math.random()*(max-min)+min)
+    }
 
     if((viruses.countActive())<=3){
       let disabledLength = disabledBodies.length;
-      let randomIdx = Math.floor(Math.random()*(disabledLength-0))
+      let randomIdx = getRandom(disabledLength)
       console.log("reviving",disabledBodies[randomIdx])
-      let chosen = disabledBodies[randomIdx]
+      let chosen = disabledBodies.splice(randomIdx, 1)[0];
       chosen.anims.play("neutral");
       chosen.enableBody(true, chosen.x, chosen.y, true, true)
     }
+
+    //TODO: find way to kill random viruses and make them reappear randomly
+    //TODO: find way to track if there's a virus at x,y position
+    // let alive = viruses.getChildren().filter(virus => virus.active)
+    // console.log("alive", alive)
+
+
+    // let randomVirus = viruses.getRandomExists();
+    // console.log("CHILDREN",viruses.getChildren())
+
   },
 });
