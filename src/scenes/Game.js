@@ -12,6 +12,8 @@ var scoreText;
 var viruses;
 let disabledBodies = [];
 let gameOver = false;
+let timer;
+let curTime = 62;
 let tracker = {
   0: false,
   1: false,
@@ -42,6 +44,16 @@ export default new Phaser.Class({
 
     //Score keeping
     scoreText = this.add.text(20,20, "Score: 0", {fontSize: "30px", fill: "#000"})
+    //Timer
+    function formatTime(seconds){
+      let min = Math.floor(seconds/60);
+      let sec = seconds%60;
+      sec = sec.toString().padStart(2, "0");
+      return `${min}:${sec}`;
+    }
+
+    timer = this.add.text(340, 20, `Timer: ${formatTime(curTime)}`, {fontSize: "30px", fill: "#000"});
+
 
     // stars.children.iterate(function (child) {
     //   child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
