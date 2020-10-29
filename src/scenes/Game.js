@@ -10,21 +10,8 @@ import { accelerate, decelerate } from "../utils";
 var score = 0;
 var scoreText;
 var viruses;
-let disabledBodies = [];
-// let gameOver = false;
 let timer, timeEvent;
 let initialTime = 30, curTime = initialTime;
-// let tracker = {
-//   0: false,
-//   1: false,
-//   2: false,
-//   3: false,
-//   4: false,
-//   5: false,
-//   6: false,
-//   7: false,
-//   8: false,
-// }
 
 
 export default new Phaser.Class({
