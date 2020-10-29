@@ -6,25 +6,25 @@ import virus from "../assets/CoronaSpriteSheet.png";
 import star from "../assets/star.png";
 import { accelerate, decelerate } from "../utils";
 
-let pointer;
+
 var score = 0;
 var scoreText;
 var viruses;
 let disabledBodies = [];
-let gameOver = false;
-let timer;
-let curTime = 62;
-let tracker = {
-  0: false,
-  1: false,
-  2: false,
-  3: false,
-  4: false,
-  5: false,
-  6: false,
-  7: false,
-  8: false,
-}
+// let gameOver = false;
+let timer, timeEvent;
+let initialTime = 30, curTime = initialTime;
+// let tracker = {
+//   0: false,
+//   1: false,
+//   2: false,
+//   3: false,
+//   4: false,
+//   5: false,
+//   6: false,
+//   7: false,
+//   8: false,
+// }
 
 
 export default new Phaser.Class({
@@ -51,8 +51,13 @@ export default new Phaser.Class({
       sec = sec.toString().padStart(2, "0");
       return `${min}:${sec}`;
     }
-
     timer = this.add.text(340, 20, `Timer: ${formatTime(curTime)}`, {fontSize: "30px", fill: "#000"});
+
+    function decreaseTime(){
+      curTime--;
+      timer.setText(`Time:${formatTime(curTime)}`)
+    }
+    timeEvent = this.time.addEvent({delay: 1000, callback: decreaseTime, callbackScope: this, loop: true})
 
 
     // stars.children.iterate(function (child) {
@@ -104,15 +109,6 @@ export default new Phaser.Class({
     Phaser.Actions.Call(viruses.getChildren(), function(virus){
       virus.setInteractive();
       virus.on("pointerdown", function(pointer){
-        //Destroy virus
-        // let killedVirus = virus;
-        // killedVirus.anims.play("hit");
-        // console.log("killed virus", killedVirus)
-        // setTimeout(function(){
-        //   killedVirus.disableBody(true, true);
-        //   disabledBodies.push(killedVirus);
-        // }, 100)
-        // console.log("disabled ones", disabledBodies)
         killSprite(virus);
         //Add to score
         score++;
@@ -136,7 +132,7 @@ export default new Phaser.Class({
       return Math.floor(Math.random()*(max-min)+min)
     }
 
-    if((viruses.countActive())<=3){
+    if(disabledBodies.length &&(viruses.countActive())<=3){
       let disabledLength = disabledBodies.length;
       let randomIdx = getRandom(disabledLength)
       console.log("reviving",disabledBodies[randomIdx])
@@ -145,6 +141,12 @@ export default new Phaser.Class({
       chosen.enableBody(true, chosen.x, chosen.y, true, true)
     }
 
+    if(curTime==0){
+      this.scene.start("winscreen");
+      curTime = initialTime;
+      score = 0;
+      disabledBodies = [];
+    }
     //TODO: find way to kill random viruses and make them reappear randomly
     //TODO: find way to track if there's a virus at x,y position
     // let alive = viruses.getChildren().filter(virus => virus.active)
