@@ -67,16 +67,21 @@ export default new Phaser.Class({
     //   child.setBounce(1, 1);
     //   child.setCollideWorldBounds(true);
     // });
-    let randomNum = Math.floor(Math.random()*(8-1)+1);
 
     viruses = this.physics.add.staticGroup({
       key: "virus",
-      repeat: randomNum,
+      repeat: 8,
       setScale: { x: 0.75, y: 0.75 },
       gridAlign: {width: 3, height: 3, cellWidth: 160, cellHeight: 150, x: 105, y: 260}
     })
+    let randomNum = Math.floor(Math.random()*(8-1)+1);
+    for (let i = 0; i < randomNum; i++) {
+      let reaper = Math.floor(Math.random()*(8-1)+1);
+      viruses.children.entries[reaper].disableBody(true,true);
+    }
 
-    console.log("CHILDREN",viruses.getChildren())
+    console.log("GET CHILDREN",viruses.getChildren())
+    console.log("CHILDREN", viruses.children.entries)
 
     this.anims.create({
       key:"neutral",
@@ -91,17 +96,17 @@ export default new Phaser.Class({
       duration: 100
     })
 
-    console.log("VIRUSES",viruses)
+    // console.log("VIRUSES",viruses)
 
     const killSprite = function(virus){
       let killedVirus = virus;
           killedVirus.anims.play("hit");
-          console.log("killed virus", killedVirus)
+          // console.log("killed virus", killedVirus)
           setTimeout(function(){
             killedVirus.disableBody(true, true);
             disabledBodies.push(killedVirus);
           }, 100)
-          console.log("disabled ones", disabledBodies)
+          // console.log("disabled ones", disabledBodies)
 
     }
 
@@ -112,11 +117,11 @@ export default new Phaser.Class({
         killSprite(virus);
         //Add to score
         score++;
-        console.log("SCORE UPDATE", score)
+        // console.log("SCORE UPDATE", score)
         scoreText.setText(`Score: ${score}`)
 
         const virusesLeft = viruses.countActive();
-        console.log("Viruses left", virusesLeft)
+        // console.log("Viruses left", virusesLeft)
         if(virusesLeft==0){
           this.scene.start("winscreen");
         }
@@ -135,7 +140,7 @@ export default new Phaser.Class({
     if(disabledBodies.length &&(viruses.countActive())<=3){
       let disabledLength = disabledBodies.length;
       let randomIdx = getRandom(disabledLength)
-      console.log("reviving",disabledBodies[randomIdx])
+      // console.log("reviving",disabledBodies[randomIdx])
       let chosen = disabledBodies.splice(randomIdx, 1)[0];
       chosen.anims.play("neutral");
       chosen.enableBody(true, chosen.x, chosen.y, true, true)
