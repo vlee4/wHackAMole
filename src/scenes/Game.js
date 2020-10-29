@@ -104,7 +104,7 @@ export default new Phaser.Class({
           // console.log("killed virus", killedVirus)
           setTimeout(function(){
             killedVirus.disableBody(true, true);
-            disabledBodies.push(killedVirus);
+            // disabledBodies.push(killedVirus);
           }, 100)
           // console.log("disabled ones", disabledBodies)
 
@@ -120,11 +120,11 @@ export default new Phaser.Class({
         // console.log("SCORE UPDATE", score)
         scoreText.setText(`Score: ${score}`)
 
-        const virusesLeft = viruses.countActive();
+        // const virusesLeft = viruses.countActive();
         // console.log("Viruses left", virusesLeft)
-        if(virusesLeft==0){
-          this.scene.start("winscreen");
-        }
+        // if(virusesLeft==0){
+        //   this.scene.start("winscreen");
+        // }
       }, this);
     }, this);
 
@@ -137,13 +137,20 @@ export default new Phaser.Class({
       return Math.floor(Math.random()*(max-min)+min)
     }
 
-    if(disabledBodies.length &&(viruses.countActive())<=3){
-      let disabledLength = disabledBodies.length;
-      let randomIdx = getRandom(disabledLength)
+    if((viruses.countActive())<=3){
+      // let disabledLength = disabledBodies.length;
+      // let randomIdx = getRandom(disabledLength)
       // console.log("reviving",disabledBodies[randomIdx])
-      let chosen = disabledBodies.splice(randomIdx, 1)[0];
+      // let chosen = disabledBodies.splice(randomIdx, 1)[0];
+      let dead = viruses.getChildren().filter(virus => !virus.active);
+      // let dead = viruses.getChildren().filter(virus => !virus.active)
+      // console.log("DEAD", dead)
+      // console.log("ALIVE", alive)
+      let randomIdx = getRandom(dead.length);
+      let chosen = dead[randomIdx];
+      console.log("CHOSEN", chosen)
       chosen.anims.play("neutral");
-      chosen.enableBody(true, chosen.x, chosen.y, true, true)
+      chosen.enableBody(false, chosen.x, chosen.y, true, true)
     }
 
     if(curTime==0){
