@@ -11,7 +11,9 @@ var score = 0;
 var scoreText;
 var viruses;
 let timer, timeEvent;
+let gameOver = true;
 let initialTime = 30, curTime = initialTime;
+let killingTime;
 
 
 export default new Phaser.Class({
@@ -26,11 +28,21 @@ export default new Phaser.Class({
 
   },
   create: function create() {
+    gameOver = false;
     //Creating game elements
     this.add.image(275, 410, "background"); //note: All Phaser3 Game Obj are positioned based on their center by default, and can be changed to have the drawing position set to the top-left by appending .setOrigin(0,0) to this line
 
     //Score keeping
     scoreText = this.add.text(20,20, "Score: 0", {fontSize: "30px", fill: "#000"})
+
+    //Kills virus sprite
+    const killSprite = function(virus){
+      let killedVirus = virus;
+          killedVirus.anims.play("hit");
+          setTimeout(function(){
+            killedVirus.disableBody(true, true);
+          }, 100)
+    }
 
     //Timer
     function formatTime(seconds){
@@ -61,6 +73,14 @@ export default new Phaser.Class({
       viruses.children.entries[reaper].disableBody(true,true);
     }
 
+    this.time.addEvent({delay: 1000, callback: killSprite, args: [viruses.children.entries[randomNum]], callbackScope: this, loop: true })
+
+    // while(gameOver && curTime>0){
+    //   setTimeout(function(){
+    //     viruses.children.entries[randomNum].disableBody(true, true)
+    //   }, 100)
+    // }
+
     //Create animations
     this.anims.create({
       key:"neutral",
@@ -75,14 +95,6 @@ export default new Phaser.Class({
       duration: 100
     })
 
-    //Kills virus sprite
-    const killSprite = function(virus){
-      let killedVirus = virus;
-          killedVirus.anims.play("hit");
-          setTimeout(function(){
-            killedVirus.disableBody(true, true);
-          }, 100)
-    }
 
     //Making viruses interactive
     Phaser.Actions.Call(viruses.getChildren(), function(virus){
@@ -113,15 +125,20 @@ export default new Phaser.Class({
       chosen.enableBody(false, chosen.x, chosen.y, true, true)
     }
 
+    // while(!gameOver){
+    //  let alive = viruses.getChildren().filter(virus => virus.active);
+    //   setTimeout(function(){
+    //     alive[getRandom(alive.length)].disableBody(true, true);
+    //   }, 1000)
+    // }
+
     if(curTime==0){
       this.scene.start("winscreen");
       curTime = initialTime;
       score = 0;
-      disabledBodies = [];
+      gameOver = true;
     }
     //TODO: find way to kill random viruses and make them reappear randomly
-    //TODO: find way to track if there's a virus at x,y position
-
 
     // let randomVirus = viruses.getRandomExists();
     // console.log("CHILDREN",viruses.getChildren())
